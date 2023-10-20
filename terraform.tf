@@ -7,4 +7,12 @@ terraform {
       version = "~> 5.10.0"
     }
   }
+
+  cloud {
+    organization = "dksifoua"
+
+    workspaces {
+      project = "jenkins-application"
+    }
+  }
 }
