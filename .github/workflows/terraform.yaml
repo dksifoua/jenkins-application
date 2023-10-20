@@ -3,7 +3,8 @@ name: 'Terraform'
 on:
   pull_request:
     types:
-      - closed
+      - opened
+      - synchronize
     branches:
       - master
 
@@ -22,10 +23,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v2
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2.0.3
+        uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
@@ -33,11 +34,13 @@ jobs:
         run: terraform init
 
       - name: Terraform Format
-        run: terraform fmt -check
+        run: terraform fmt
 
       - name: Terraform Plan
-        run: terraform plan -input=false
+        run: terraform plan
 
       - name: Terraform Apply
-        if: github.event.pull_request.merged == true
-        run: terraform apply -auto-approve -input=false
+        run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        run: terraform destroy
