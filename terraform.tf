@@ -12,7 +12,7 @@ terraform {
     organization = "dksifoua"
 
     workspaces {
-      project = "jenkins-application"
+      name = "jenkins-application"
     }
   }
 }
